@@ -71,4 +71,16 @@
    #define UNIITEST_NS_QUAL_STD(x) ::std::x
 #endif
 
+// ADSK, JNH, UNITTEST_LINKAGE
+#if defined(WIN32) || defined(WIN64)
+	#if defined(BUILD_CONFIG_SHARED_LIB)
+		#define UNITTEST_WIN32_DLL
+		#if defined(UNITTEST_BUILDING)
+			#define UNITTEST_DLL_EXPORT
+		#else
+			#define UNITTEST_DLL_IMPORT
+		#endif // defined(UNITTEST_BUILDING)
+	#endif // defined(BUILD_CONFIG_SHARED_LIB)
+#endif // defined(WIN32) || defined(WIN64)
+
 #endif

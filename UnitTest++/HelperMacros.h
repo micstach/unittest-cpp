@@ -32,6 +32,12 @@
       UNITTEST_IMPEXP_TEMPLATE template class UNITTEST_LINKAGE std::vector< T >;    \
       __pragma(warning(pop))
 #else
+   // ADSK, JNH, undefine first
+   #undef UNITTEST_IMPORT
+   #undef UNITTEST_EXPORT
+   #undef UNITTEST_LINKAGE
+   #undef UNITTEST_IMPEXP_TEMPLATE
+   #undef UNITTEST_STDVECTOR_LINKAGE
    #define UNITTEST_IMPORT
    #define UNITTEST_EXPORT
    #define UNITTEST_LINKAGE
