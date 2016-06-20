@@ -1,9 +1,5 @@
 # ------------------------------------------------------------------------------
 
-cmake_minimum_required(VERSION 2.8.1)
-
-# ------------------------------------------------------------------------------
-
 # ADSK (using as child)
 # project(UnitTest++)
 message("Processing 3p/unittest++...")
@@ -12,17 +8,6 @@ message("Processing 3p/unittest++...")
 
 # set modules name
 set(MODULE_NAME UnitTest++)
-
-# ------------------------------------------------------------------------------
-
-# Eliminate a warning when building in Windows that relates
-# to static linking of Qt executables to qtmain.lib.
-# This policy was introduced in CMake version 2.8.11.
-# CMake version 2.8.11.2 warns when the policy is not set
-# and uses OLD behavior.
-if(POLICY CMP0020)
-  cmake_policy(SET CMP0020 NEW)
-endif()
 
 # ------------------------------------------------------------------------------
 
@@ -71,19 +56,32 @@ source_group(${platformDir_} FILES ${platformHeaders_} ${platformSources_})
 
 # ------------------------------------------------------------------------------
 
-# ADSK, mark as building 
-add_definitions ( -DUNITTEST_BUILDING )
+# create the lib
+add_library(${MODULE_NAME} ${PREFERRED_LIBRARY_TYPE} ${headers_} ${sources_} ${platformHeaders_} ${platformSources_})
 
 # ------------------------------------------------------------------------------
 
-# create the lib
-add_library(${MODULE_NAME} ${PREFERRED_LIBRARY_TYPE} ${headers_} ${sources_} ${platformHeaders_} ${platformSources_})
+# ADSK, mark as building 
+target_compile_definitions(${MODULE_NAME}
+	PRIVATE
+		-DUNITTEST_BUILDING
+)
+
+# ------------------------------------------------------------------------------
+
+# ADSK, public includes
+target_include_directories(${MODULE_NAME}
+	PUBLIC
+		${CMAKE_CURRENT_SOURCE_DIR}/UnitTest++
+)
 
 # ------------------------------------------------------------------------------
 
 if(${UTPP_USE_PLUS_SIGN})
 	set_target_properties(${MODULE_NAME} PROPERTIES OUTPUT_NAME UnitTest++)
 endif()
+
+# ------------------------------------------------------------------------------
 
 # ADSK, JNH, not required
 # build the test runner
@@ -123,9 +121,16 @@ endif()
 
 # ------------------------------------------------------------------------------
 
-apply_target_settings( ${MODULE_NAME} )
+# ADSK 
+if(COMMAND apply_target_settings)
+	apply_target_settings(${MODULE_NAME})
+endif()
 
 # ------------------------------------------------------------------------------
 
+# Tidy up solution 
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set_property(TARGET ${MODULE_NAME} PROPERTY FOLDER "3p" )
 
+# ------------------------------------------------------------------------------
 
