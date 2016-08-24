@@ -128,6 +128,19 @@ endif()
 
 # ------------------------------------------------------------------------------
 
+if(COMMAND target_warning_level)
+	target_warning_level(${MODULE_NAME} 3)
+endif()
+
+if(COMMAND target_warning_disable)
+	target_warning_disable(${MODULE_NAME} 4251)
+	target_warning_disable(${MODULE_NAME} 4996)
+	target_warning_disable(${MODULE_NAME} 4244)
+	target_warning_disable(${MODULE_NAME} 4267)
+endif()
+
+# ------------------------------------------------------------------------------
+
 # Tidy up solution 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(TARGET ${MODULE_NAME} PROPERTY FOLDER "3p" )
