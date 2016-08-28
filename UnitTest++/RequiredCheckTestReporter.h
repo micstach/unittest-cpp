@@ -23,6 +23,10 @@ namespace UnitTest {
       TestReporter* m_originalTestReporter;
       ThrowingTestReporter m_throwingReporter;
       int m_continue;
+
+   private:
+	   RequiredCheckTestReporter(const RequiredCheckTestReporter&);
+	   RequiredCheckTestReporter&  operator = (const RequiredCheckTestReporter&);
    };
 }
 
