@@ -39,8 +39,11 @@
    #undef UNITTEST_IMPEXP_TEMPLATE
    #undef UNITTEST_STDVECTOR_LINKAGE
    #define UNITTEST_IMPORT
-   #define UNITTEST_EXPORT
-   #define UNITTEST_LINKAGE
+   #if defined(__GNUC__) || defined(__APPLE__) || defined(LINUX)
+       #define UNITTEST_EXPORT __attribute__((visibility("default")))
+   #else
+   #endif
+   #define UNITTEST_LINKAGE UNITTEST_EXPORT
    #define UNITTEST_IMPEXP_TEMPLATE
    #define UNITTEST_STDVECTOR_LINKAGE(T)
 #endif
