@@ -42,6 +42,7 @@
    #if defined(__GNUC__) || defined(__APPLE__) || defined(LINUX)
        #define UNITTEST_EXPORT __attribute__((visibility("default")))
    #else
+       #define UNITTEST_EXPORT
    #endif
    #define UNITTEST_LINKAGE UNITTEST_EXPORT
    #define UNITTEST_IMPEXP_TEMPLATE
